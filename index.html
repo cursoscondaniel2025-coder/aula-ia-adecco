@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Material de prácticas del Curso de Inteligencia Artificial para la vida cotidiana y la búsqueda de empleo · Adecco · DAPEN Centro de Estudios">
+<link rel="icon" href="logo-dapen.png">
+<title>Aula IA · Adecco</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: franja de logotipos (DAPEN + Adecco) → banda pizarra con datos del curso → fichas en orden de sesión */
+:root{
+  --slate:#3f5965; --slate-deep:#2f444e; --teal:#289db9; --teal-ink:#1b7f99; --teal-soft:#e4f3f7;
+  --bg:#f3f6f7; --panel:#ffffff; --fg:#22323a; --muted:#5f7480; --line:#dbe4e8; --band-fg:#ffffff;
+  --display:"Sora", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141c20; --panel:#1c262b; --fg:#e6eef1; --muted:#9fb3bc; --line:#2d3b42;
+  --teal-soft:#183640; --teal-ink:#289db9; --slate-deep:#24343c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141c20; --panel:#1c262b; --fg:#e6eef1; --muted:#9fb3bc; --line:#2d3b42;
+  --teal-soft:#183640; --teal-ink:#289db9; --slate-deep:#24343c; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5}
+.inner{max-width:920px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Franja de logotipos: siempre blanca para que ambos logos se lean bien */
+.brandbar{background:#ffffff;border-bottom:3px solid var(--teal)}
+.brandbar .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brandbar img{display:block;height:76px;width:auto}
+.brandbar .cli{height:46px}
+.brandbar .x{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5f7480;text-align:center;line-height:1.3}
+.brandbar .x b{display:block;color:#3f5965;font-weight:600;letter-spacing:.06em}
+
+/* Banda del curso */
+.hero{background:var(--slate-deep);color:var(--band-fg);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-140px;top:-160px;width:420px;height:420px;border-radius:50%;
+  border:26px solid var(--teal);border-left-color:transparent;border-bottom-color:transparent;opacity:.35;transform:rotate(20deg);pointer-events:none}
+.hero .inner{padding-block:36px 32px;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7fd0e3}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(26px,4.6vw,38px);line-height:1.15;margin:0;text-wrap:balance;max-width:24ch}
+.lead{margin:0;color:#d5e2e7;max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;padding:0;list-style:none}
+.facts li{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:5px 14px;font-size:14px;display:flex;gap:6px}
+.facts span{color:#a9c3cc}.facts b{font-weight:600;color:#fff;font-variant-numeric:tabular-nums}
+
+main.inner{padding-block:28px 48px;display:flex;flex-direction:column;gap:30px}
+.notice{font-size:14px;padding:12px 16px;border-radius:8px;background:var(--teal-soft);border-left:4px solid var(--teal);color:var(--fg)}
+.sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--line);padding-bottom:8px}
+h2{font-family:var(--display);font-size:18px;font-weight:600;margin:0;color:var(--slate)}
+.sechead small{color:var(--muted);font-size:14px}
+.list{display:flex;flex-direction:column;gap:14px}
+section{display:flex;flex-direction:column;gap:14px}
+
+.ficha{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;
+  box-shadow:0 1px 2px rgba(31,52,62,.06)}
+.top{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.num{font-family:var(--display);font-weight:700;font-size:16px;color:#fff;background:var(--slate);
+  border-radius:8px;width:48px;height:48px;display:grid;place-items:center;font-variant-numeric:tabular-nums;flex:none}
+.pres .num{background:var(--teal-ink)}
+.info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.info .k{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink)}
+.info h3{margin:0;font-family:var(--display);font-weight:600;font-size:18px;line-height:1.3;color:var(--fg)}
+.info p{margin:0;color:var(--muted);font-size:15px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+button,a.btn{font:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:6px;padding:9px 14px;border:1px solid transparent;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;transition:background .15s, border-color .15s}
+a.btn svg{width:16px;height:16px;flex:none}
+a.btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+button:disabled{opacity:.55;cursor:default}
+.primary{background:var(--teal-ink);color:#fff}
+.primary:hover:not(:disabled){background:var(--slate)}
+.secondary{background:transparent;color:var(--fg);border-color:var(--line)}
+.secondary:hover:not(:disabled){border-color:var(--teal);color:var(--teal-ink)}
+.res{border-top:1px solid var(--line);padding-top:10px}
+.res summary{cursor:pointer;font-weight:600;color:var(--slate);font-size:15px}
+:root:not([data-theme="light"]) .res summary{color:var(--fg)}
+.res ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column}
+.res li{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid var(--line)}
+.res li:last-child{border-bottom:0}
+.res li:hover{background:var(--teal-soft)}
+.ext{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--muted);
+  border-radius:4px;padding:2px 6px;min-width:44px;text-align:center;flex:none}
+.ext.pdf{background:#b5473a}.ext.docx{background:#2b5797}.ext.xlsx{background:#1e7145}.ext.pptx{background:#c4532b}
+.ext.png,.ext.jpg{background:#6b5ea8}.ext.csv{background:#4f7a3a}
+.fname{flex:1;min-width:0;overflow-wrap:anywhere;font-size:15px}
+.size{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.link{background:none;border:0;color:var(--teal-ink);padding:4px 6px}
+.link:hover:not(:disabled){text-decoration:underline}
+.status{font-size:13px;min-height:1.2em;color:var(--muted)}
+.status:empty{display:none}
+
+footer{background:var(--slate-deep);color:#c9d8de;font-size:14px}
+footer .inner{padding-block:22px;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
+footer b{color:#fff;font-family:var(--display);font-weight:600}
+footer .note{flex-basis:100%;font-size:13px;color:#9fb6bf}
+@media (max-width:560px){
+  .brandbar img{height:46px}.brandbar .cli{height:28px}.brandbar .x{display:none}
+  .top{align-items:flex-start}.actions{width:100%}.actions a.btn{flex:1;justify-content:center}
+  .hero::after{width:260px;height:260px;right:-120px;top:-120px;border-width:18px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+a.btn{text-decoration:none}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+.grp{margin-top:6px}
+.grp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 4px 6px;border-bottom:2px solid var(--line)}
+.grp-head h4{margin:0;font-family:var(--display);font-weight:600;font-size:15px;color:var(--teal-ink);display:flex;align-items:center;gap:8px}
+.grp-head h4 svg{width:16px;height:16px}
+.grp-head .count{font-weight:400;color:var(--muted);font-size:13px;font-family:var(--body)}
+.secondary.small{padding:5px 10px;font-size:13px}
+.repaso .num{background:var(--teal)}
+.empty{background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:18px 20px;color:var(--muted);font-size:15px}
+.updated{font-size:13px;color:#a9c3cc}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.toc a{display:inline-block;font-size:14px;font-weight:600;text-decoration:none;color:var(--slate);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+:root:not([data-theme="light"]) .toc a{color:var(--fg)}
+.toc a:hover{border-color:var(--teal);color:var(--teal-ink)}
+.ficha{scroll-margin-top:16px}
+
+.hero .inner.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:28px;align-items:center}
+.hero-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.skills-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-left:4px solid var(--teal);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.skills-card .sk-eyebrow{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7fd0e3}
+.skills-card h2{margin:0;font-family:var(--display);font-size:19px;line-height:1.25;color:#fff}
+.skills-card p{margin:0;color:#d5e2e7;font-size:15px}
+.sk-btn{align-self:flex-start;margin-top:6px;display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:9px 14px;border-radius:6px;transition:background .15s}
+.sk-btn:hover{background:#1f8aa6}
+.sk-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:820px){.hero .inner.hero-grid{grid-template-columns:1fr}.skills-card{max-width:420px}}
+</style>
+</head>
+<body>
+
+<div class="brandbar"><div class="inner">
+  <img src="logo-dapen.png" alt="DAPEN Centro de Estudios">
+  <div class="x">Formación para<b>Adecco</b></div>
+  <img class="cli" src="logo-adecco.png" alt="Adecco">
+</div></div>
+
+<div class="hero"><div class="inner hero-grid">
+ <div class="hero-main">
+  <div class="eyebrow">Aula del curso · Material de prácticas</div>
+  <h1>Inteligencia artificial para la vida cotidiana y la búsqueda de empleo</h1>
+  <p class="lead">Descarga aquí las fichas de cada sesión y los archivos de trabajo de los ejercicios. El material se amplía a medida que avanza el curso.</p>
+  <ul class="facts">
+    <li><span>Duración</span><b>8 horas</b></li>
+    <li><span>Modalidad</span><b>Presencial</b></li>
+    <li><span>Fichas</span><b id="stat-fichas">—</b></li>
+    <li><span>Archivos de práctica</span><b id="stat-rec">—</b></li>
+    <li><span>Fechas</span><b>23–27 noviembre 2026</b></li>
+    <li><span>Formador</span><b>Daniel Peña Becerra</b></li>
+    <li><span>Actualizado</span><b id="stat-fecha">—</b></li>
+  </ul>
+ </div>
+ <aside class="skills-card" aria-labelledby="skills-title">
+  <div class="sk-eyebrow">Herramienta del curso</div>
+  <h2 id="skills-title">ChatGPT versión gratuita</h2>
+  <p>Todas las prácticas se hacen con la versión gratuita de ChatGPT, desde el móvil o el ordenador.</p>
+  <a class="sk-btn" href="https://chatgpt.com/" target="_blank" rel="noopener">Abrir ChatGPT <span aria-hidden="true">→</span></a>
+ </aside>
+</div></div>
+
+
+
+<main class="inner">
+  <nav aria-label="Índice"><ul class="toc" id="toc"></ul></nav>
+
+  <section aria-labelledby="h-pres">
+    <div class="sechead"><h2 id="h-pres">Programa del curso</h2></div>
+    <div id="pres" class="list"></div>
+  </section>
+
+  <section aria-labelledby="h-fichas">
+    <div class="sechead"><h2 id="h-fichas">Fichas de prácticas</h2><small>Cada ficha incluye los ejercicios paso a paso</small></div>
+    <div class="list" id="fichas"></div>
+  </section>
+
+  <section aria-labelledby="h-repaso" id="sec-repaso" hidden>
+    <div class="sechead"><h2 id="h-repaso">Material de repaso</h2><small>Guías y resúmenes para consultar después de clase</small></div>
+    <div class="list" id="repaso"></div>
+  </section>
+
+  <section aria-labelledby="h-repcurso" id="sec-repcurso" hidden>
+    <div class="sechead"><h2 id="h-repcurso">Repaso del curso</h2><small>Resúmenes y ejemplos para repasar lo visto en clase</small></div>
+    <div class="list" id="repcurso"></div>
+  </section>
+
+  <section aria-labelledby="h-compl" id="sec-compl" hidden>
+    <div class="sechead"><h2 id="h-compl">Material complementario</h2><small>Plantillas y recursos de apoyo para tu trabajo diario</small></div>
+    <div class="list" id="compl"></div>
+  </section>
+</main>
+
+<footer><div class="inner">
+  <b>DAPEN Centro de Estudios</b>
+  <span>Valencia · www.dapencentroestudios.com · daniel@grupodapen.com</span>
+  <span class="note">Los currículums, ofertas y documentos de los archivos de prácticas son ejemplos ficticios preparados para el curso.</span>
+</div></footer>
+
+<script>
+const DATA = {"presentacion": {"titulo": "Inteligencia artificial para la vida cotidiana y la búsqueda de empleo", "desc": "Programa formativo: objetivos, contenidos y herramientas de cada bloque.", "pdf": {"path": "archivos/programa/Programa del curso - IA para la vida cotidiana y la busqueda de empleo.pdf", "nombre": "Programa del curso - IA para la vida cotidiana y la busqueda de empleo.pdf", "size": 65283}}, "fichas": [{"n": 1, "id": "ficha-01", "titulo": "Configuración de ChatGPT", "desc": "Que ChatGPT trabaje como tú quieres.", "pdf": {"path": "archivos/fichas/Ficha 01 - Configuracion de ChatGPT (Busqueda de empleo).pdf", "nombre": "Ficha 01 - Configuracion de ChatGPT (Busqueda de empleo).pdf", "size": 140925}}, {"n": 2, "id": "ficha-02", "titulo": "Cómo pedirle las cosas a ChatGPT", "desc": "Cuatro métodos: Rol, CLEAR, DAPEN+R y Entrevista.", "pdf": {"path": "archivos/fichas/Ficha 02 - Metodos para escribir prompts (Busqueda de empleo).pdf", "nombre": "Ficha 02 - Metodos para escribir prompts (Busqueda de empleo).pdf", "size": 122668}}, {"n": 3, "id": "ficha-03", "titulo": "La memoria de ChatGPT", "desc": "Que ChatGPT recuerde lo importante de tu búsqueda.", "pdf": {"path": "archivos/fichas/Ficha 03 - La memoria de ChatGPT (Busqueda de empleo).pdf", "nombre": "Ficha 03 - La memoria de ChatGPT (Busqueda de empleo).pdf", "size": 138571}}, {"n": 4, "id": "ficha-04", "titulo": "Simulacro de entrevista", "desc": "Ensaya tu entrevista de trabajo hablando con ChatGPT.", "pdf": {"path": "archivos/fichas/Ficha 04 - Simulacro de entrevista con voz (Busqueda de empleo).pdf", "nombre": "Ficha 04 - Simulacro de entrevista con voz (Busqueda de empleo).pdf", "size": 118629}}, {"n": 5, "id": "ficha-05", "titulo": "Análisis de capturas de pantalla", "desc": "Entender una oferta, detectar engaños y resolver errores.", "pdf": {"path": "archivos/fichas/Ficha 05 - Analisis de capturas de pantalla (Busqueda de empleo).pdf", "nombre": "Ficha 05 - Analisis de capturas de pantalla (Busqueda de empleo).pdf", "size": 126684}, "zip": {"path": "archivos/zip/Recursos Ficha 05.zip", "nombre": "Recursos Ficha 05.zip", "size": 483508}, "grupos": [{"nombre": "", "archivos": [{"path": "archivos/recursos/Recursos Ficha 05/1. Oferta_dependienta_Moda_Turia.png", "nombre": "1. Oferta_dependienta_Moda_Turia.png", "size": 107491}, {"path": "archivos/recursos/Recursos Ficha 05/2. Oferta_mozo_almacen_Logistica_Levante.png", "nombre": "2. Oferta_mozo_almacen_Logistica_Levante.png", "size": 108746}, {"path": "archivos/recursos/Recursos Ficha 05/3. Oferta_auxiliar_administrativa_Gestoria_Albufera.png", "nombre": "3. Oferta_auxiliar_administrativa_Gestoria_Albufera.png", "size": 111106}, {"path": "archivos/recursos/Recursos Ficha 05/4. Oferta_sospechosa_trabajo_desde_casa.png", "nombre": "4. Oferta_sospechosa_trabajo_desde_casa.png", "size": 81717}, {"path": "archivos/recursos/Recursos Ficha 05/5. Error_al_subir_curriculum.png", "nombre": "5. Error_al_subir_curriculum.png", "size": 50692}, {"path": "archivos/recursos/Recursos Ficha 05/6. Factura_luz_ejemplo.png", "nombre": "6. Factura_luz_ejemplo.png", "size": 66147}]}]}, {"n": 6, "id": "ficha-06", "titulo": "Tablas, gráficos y mapas mentales", "desc": "Ordenar tu búsqueda de empleo y verla de un vistazo.", "pdf": {"path": "archivos/fichas/Ficha 06 - Tablas graficos y mapas mentales (Busqueda de empleo).pdf", "nombre": "Ficha 06 - Tablas graficos y mapas mentales (Busqueda de empleo).pdf", "size": 117161}, "zip": {"path": "archivos/zip/Recursos Ficha 06.zip", "nombre": "Recursos Ficha 06.zip", "size": 11339}, "grupos": [{"nombre": "", "archivos": [{"path": "archivos/recursos/Recursos Ficha 06/1. Seguimiento_candidaturas_Ahmed.xlsx", "nombre": "1. Seguimiento_candidaturas_Ahmed.xlsx", "size": 6608}, {"path": "archivos/recursos/Recursos Ficha 06/2. Gastos_hogar_octubre.xlsx", "nombre": "2. Gastos_hogar_octubre.xlsx", "size": 5510}]}]}, {"n": 7, "id": "ficha-07", "titulo": "Trabajar con varios archivos", "desc": "Adaptar tu currículum a cada oferta y comparar documentos.", "pdf": {"path": "archivos/fichas/Ficha 07 - Trabajar con varios archivos (Busqueda de empleo).pdf", "nombre": "Ficha 07 - Trabajar con varios archivos (Busqueda de empleo).pdf", "size": 124748}, "zip": {"path": "archivos/zip/Recursos Ficha 07.zip", "nombre": "Recursos Ficha 07.zip", "size": 284923}, "grupos": [{"nombre": "", "archivos": [{"path": "archivos/recursos/Recursos Ficha 07/1. CV_Laura_Martinez.docx", "nombre": "1. CV_Laura_Martinez.docx", "size": 37059}, {"path": "archivos/recursos/Recursos Ficha 07/2. CV_Ahmed_Benali.pdf", "nombre": "2. CV_Ahmed_Benali.pdf", "size": 34246}, {"path": "archivos/recursos/Recursos Ficha 07/3. CV_Carmen_Ruiz.docx", "nombre": "3. CV_Carmen_Ruiz.docx", "size": 37162}, {"path": "archivos/recursos/Recursos Ficha 07/4. Oferta_dependienta_Moda_Turia.pdf", "nombre": "4. Oferta_dependienta_Moda_Turia.pdf", "size": 39336}, {"path": "archivos/recursos/Recursos Ficha 07/5. Oferta_mozo_almacen_Logistica_Levante.pdf", "nombre": "5. Oferta_mozo_almacen_Logistica_Levante.pdf", "size": 39948}, {"path": "archivos/recursos/Recursos Ficha 07/6. Oferta_auxiliar_administrativa_Gestoria_Albufera.pdf", "nombre": "6. Oferta_auxiliar_administrativa_Gestoria_Albufera.pdf", "size": 39765}, {"path": "archivos/recursos/Recursos Ficha 07/7. Oferta_cajero_reponedor_Supermercados_La_Plaza.pdf", "nombre": "7. Oferta_cajero_reponedor_Supermercados_La_Plaza.pdf", "size": 37253}, {"path": "archivos/recursos/Recursos Ficha 07/8. Presupuesto_fibra_movil_Compania_A.pdf", "nombre": "8. Presupuesto_fibra_movil_Compania_A.pdf", "size": 37801}, {"path": "archivos/recursos/Recursos Ficha 07/9. Presupuesto_fibra_movil_Compania_B.pdf", "nombre": "9. Presupuesto_fibra_movil_Compania_B.pdf", "size": 36773}]}]}, {"n": 8, "id": "ficha-08", "titulo": "Redacción profesional", "desc": "Carta de presentación, correos de candidatura y seguimiento.", "pdf": {"path": "archivos/fichas/Ficha 08 - Redaccion profesional (Busqueda de empleo).pdf", "nombre": "Ficha 08 - Redaccion profesional (Busqueda de empleo).pdf", "size": 128185}, "zip": {"path": "archivos/zip/Recursos Ficha 08.zip", "nombre": "Recursos Ficha 08.zip", "size": 61726}, "grupos": [{"nombre": "", "archivos": [{"path": "archivos/recursos/Recursos Ficha 08/1. Carta_presentacion_antigua_Carmen.docx", "nombre": "1. Carta_presentacion_antigua_Carmen.docx", "size": 36935}, {"path": "archivos/recursos/Recursos Ficha 08/2. Correo_convocatoria_entrevista_Laura.pdf", "nombre": "2. Correo_convocatoria_entrevista_Laura.pdf", "size": 32795}]}]}, {"n": 9, "id": "ficha-09", "titulo": "Transformación y reutilización de contenidos", "desc": "Resumir, simplificar, convertir y traducir.", "pdf": {"path": "archivos/fichas/Ficha 09 - Transformacion y reutilizacion de contenidos (Busqueda de empleo).pdf", "nombre": "Ficha 09 - Transformacion y reutilizacion de contenidos (Busqueda de empleo).pdf", "size": 70027}, "zip": {"path": "archivos/zip/Recursos Ficha 09.zip", "nombre": "Recursos Ficha 09.zip", "size": 128274}, "grupos": [{"nombre": "", "archivos": [{"path": "archivos/recursos/Recursos Ficha 09/1. Bases_programa_Impulsa_Empleo.pdf", "nombre": "1. Bases_programa_Impulsa_Empleo.pdf", "size": 36653}, {"path": "archivos/recursos/Recursos Ficha 09/2. CV_Laura_Martinez.docx", "nombre": "2. CV_Laura_Martinez.docx", "size": 37059}, {"path": "archivos/recursos/Recursos Ficha 09/3. Manual_bienvenida_Logistica_Levante.docx", "nombre": "3. Manual_bienvenida_Logistica_Levante.docx", "size": 37613}, {"path": "archivos/recursos/Recursos Ficha 09/4. Circular_colegio_excursion.pdf", "nombre": "4. Circular_colegio_excursion.pdf", "size": 31332}]}]}, {"n": 10, "id": "ficha-10", "titulo": "Generar imágenes", "desc": "Crear y editar imágenes para tu búsqueda de empleo y tu día a día.", "pdf": {"path": "archivos/fichas/Ficha 10 - Generar imagenes (Busqueda de empleo).pdf", "nombre": "Ficha 10 - Generar imagenes (Busqueda de empleo).pdf", "size": 112909}}, {"n": 11, "id": "ficha-11", "titulo": "Búsqueda en Internet", "desc": "Ofertas, cursos y empresas con información actualizada.", "pdf": {"path": "archivos/fichas/Ficha 11 - Busqueda en Internet (Busqueda de empleo).pdf", "nombre": "Ficha 11 - Busqueda en Internet (Busqueda de empleo).pdf", "size": 107565}}, {"n": 12, "id": "ficha-12", "titulo": "Crear una presentación personal", "desc": "Preséntate en cinco diapositivas.", "pdf": {"path": "archivos/fichas/Ficha 12 - Crear una presentacion personal (Busqueda de empleo).pdf", "nombre": "Ficha 12 - Crear una presentacion personal (Busqueda de empleo).pdf", "size": 113116}}, {"n": 13, "id": "ficha-13", "titulo": "Crear 3 proyectos", "desc": "Tu búsqueda de empleo, tu formación y tu día a día, cada uno en su sitio.", "pdf": {"path": "archivos/fichas/Ficha 13 - Crear 3 proyectos (Busqueda de empleo).pdf", "nombre": "Ficha 13 - Crear 3 proyectos (Busqueda de empleo).pdf", "size": 164323}, "zip": {"path": "archivos/zip/Recursos Ficha 13.zip", "nombre": "Recursos Ficha 13.zip", "size": 445034}, "grupos": [{"nombre": "Proyecto 1 - Mi busqueda de empleo", "zip": {"path": "archivos/zip/Recursos Ficha 13 - Proyecto 1 - Mi busqueda de empleo.zip", "nombre": "Recursos Ficha 13 - Proyecto 1 - Mi busqueda de empleo.zip", "size": 226121}, "archivos": [{"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/1. CV_Laura_Martinez.docx", "nombre": "1. CV_Laura_Martinez.docx", "size": 37059}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/2. CV_Ahmed_Benali.pdf", "nombre": "2. CV_Ahmed_Benali.pdf", "size": 34246}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/3. CV_Carmen_Ruiz.docx", "nombre": "3. CV_Carmen_Ruiz.docx", "size": 37162}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/4. Oferta_dependienta_Moda_Turia.pdf", "nombre": "4. Oferta_dependienta_Moda_Turia.pdf", "size": 39336}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/5. Oferta_mozo_almacen_Logistica_Levante.pdf", "nombre": "5. Oferta_mozo_almacen_Logistica_Levante.pdf", "size": 39948}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/6. Oferta_auxiliar_administrativa_Gestoria_Albufera.pdf", "nombre": "6. Oferta_auxiliar_administrativa_Gestoria_Albufera.pdf", "size": 39765}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 1 - Mi busqueda de empleo/7. Oferta_cajero_reponedor_Supermercados_La_Plaza.pdf", "nombre": "7. Oferta_cajero_reponedor_Supermercados_La_Plaza.pdf", "size": 37253}]}, {"nombre": "Proyecto 2 - Formacion", "zip": {"path": "archivos/zip/Recursos Ficha 13 - Proyecto 2 - Formacion.zip", "nombre": "Recursos Ficha 13 - Proyecto 2 - Formacion.zip", "size": 65838}, "archivos": [{"path": "archivos/recursos/Recursos Ficha 13/Proyecto 2 - Formacion/1. Bases_programa_Impulsa_Empleo.pdf", "nombre": "1. Bases_programa_Impulsa_Empleo.pdf", "size": 36653}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 2 - Formacion/2. Mis_objetivos_de_formacion.docx", "nombre": "2. Mis_objetivos_de_formacion.docx", "size": 36810}]}, {"nombre": "Proyecto 3 - Vida cotidiana", "zip": {"path": "archivos/zip/Recursos Ficha 13 - Proyecto 3 - Vida cotidiana.zip", "nombre": "Recursos Ficha 13 - Proyecto 3 - Vida cotidiana.zip", "size": 151701}, "archivos": [{"path": "archivos/recursos/Recursos Ficha 13/Proyecto 3 - Vida cotidiana/1. Gastos_hogar_octubre.xlsx", "nombre": "1. Gastos_hogar_octubre.xlsx", "size": 5510}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 3 - Vida cotidiana/2. Circular_colegio_excursion.pdf", "nombre": "2. Circular_colegio_excursion.pdf", "size": 31332}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 3 - Vida cotidiana/3. Presupuesto_fibra_movil_Compania_A.pdf", "nombre": "3. Presupuesto_fibra_movil_Compania_A.pdf", "size": 37801}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 3 - Vida cotidiana/4. Presupuesto_fibra_movil_Compania_B.pdf", "nombre": "4. Presupuesto_fibra_movil_Compania_B.pdf", "size": 36773}, {"path": "archivos/recursos/Recursos Ficha 13/Proyecto 3 - Vida cotidiana/5. Factura_luz_ejemplo.png", "nombre": "5. Factura_luz_ejemplo.png", "size": 66147}]}]}, {"n": 14, "id": "ficha-14", "titulo": "Práctica final: tu reto con ChatGPT", "desc": "Un perfil nuevo, un proyecto nuevo y todo lo que has aprendido.", "pdf": {"path": "archivos/fichas/Ficha 14 - Practica final (Busqueda de empleo).pdf", "nombre": "Ficha 14 - Practica final (Busqueda de empleo).pdf", "size": 169620}}], "repaso": [], "repasoCurso": [], "complementario": [], "actualizado": "19 noviembre 2026"};
+
+const fmt = b => b >= 1048576 ? (b/1048576).toFixed(1).replace(".",",")+" MB" : Math.max(1,Math.round(b/1024))+" KB";
+const el = (tag, cls, text) => { const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; };
+const ICON='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M3 13h10"/></svg>';
+const FOLDER='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h7.5v8h-13z"/></svg>';
+const href = p => p.split("/").map(encodeURIComponent).join("/");
+
+function boton(text, cls, file){
+  const b = el("a", "btn "+cls); b.href = href(file.path); b.setAttribute("download", file.nombre);
+  b.innerHTML = cls==="link" ? "" : ICON; b.append(text); return b;
+}
+
+function listaArchivos(files){
+  const ul = el("ul");
+  files.forEach(f=>{
+    const li = el("li"); const ex = f.nombre.split(".").pop().toLowerCase();
+    li.append(el("span","ext "+ex,ex), el("span","fname",f.nombre), el("span","size",fmt(f.size)), boton("Descargar","link",f));
+    ul.append(li);
+  });
+  return ul;
+}
+
+function tarjeta(item, kicker, numTxt, extraCls){
+  const card = el("article","ficha"+(extraCls?" "+extraCls:"")); if(item.id) card.id=item.id;
+  const top = el("div","top");
+  top.append(el("div","num", numTxt));
+  const info = el("div","info");
+  info.append(el("span","k", kicker), el("h3",null,item.titulo));
+  if(item.desc) info.append(el("p",null,item.desc));
+  top.append(info);
+  const acts = el("div","actions");
+  if(item.pdf) acts.append(boton((item.pdfLabel||"Ficha en PDF")+" · "+fmt(item.pdf.size),"primary",item.pdf));
+  if(item.zip) acts.append(boton("Todos los recursos (ZIP) · "+fmt(item.zip.size),"secondary",item.zip));
+  top.append(acts); card.append(top);
+  const total = (item.grupos||[]).reduce((a,g)=>a+g.archivos.length,0);
+  if(total){
+    const det = el("details","res");
+    det.append(el("summary",null,"Archivos para la práctica ("+total+")"));
+    item.grupos.forEach(g=>{
+      const box = el("div","grp");
+      if(g.nombre){
+        const head = el("div","grp-head"); const h = el("h4"); h.innerHTML = FOLDER; h.append(g.nombre+" "); h.append(el("span","count","· "+g.archivos.length+" archivos"));
+        head.append(h);
+        if(g.zip) head.append(boton("Carpeta en ZIP · "+fmt(g.zip.size),"secondary small",g.zip));
+        box.append(head);
+      }
+      box.append(listaArchivos(g.archivos)); det.append(box);
+    });
+    card.append(det);
+  }
+  return card;
+}
+
+if(DATA.presentacion) document.getElementById("pres").append(tarjeta({...DATA.presentacion, pdfLabel:"Programa en PDF"}, "Programa formativo", "P", "pres"));
+const cont = document.getElementById("fichas");
+DATA.fichas.forEach(f => cont.append(tarjeta(f, "Ficha "+String(f.n).padStart(2,"0"), String(f.n).padStart(2,"0"))));
+const rep = document.getElementById("repaso");
+if(DATA.repaso.length){
+  DATA.repaso.forEach((r,i)=>rep.append(tarjeta({...r, pdfLabel:"Descargar"}, "Repaso", "R"+(i+1), "repaso")));
+  document.getElementById("sec-repaso").hidden=false;
+}
+
+const RC = DATA.repasoCurso || [];
+if(RC.length){
+  document.getElementById("sec-repcurso").hidden=false;
+  const rc=document.getElementById("repcurso");
+  RC.forEach((r,i)=>rc.append(tarjeta({...r, pdfLabel:"Descargar"}, "Repaso del curso", "C"+(i+1), "repaso")));
+}
+
+const MC = DATA.complementario || [];
+if(MC.length){
+  document.getElementById("sec-compl").hidden=false;
+  const mc=document.getElementById("compl");
+  MC.forEach((r,i)=>mc.append(tarjeta({...r, pdfLabel:"Descargar"}, "Material complementario", "M"+(i+1), "repaso")));
+}
+
+const toc = document.getElementById("toc");
+DATA.fichas.forEach(f=>{ const li=el("li"); const a=el("a",null,"Ficha "+String(f.n).padStart(2,"0")); a.href="#"+f.id; li.append(a); toc.append(li); });
+if(DATA.repaso.length){ const li=el("li"); const a=el("a",null,"Material de repaso"); a.href="#h-repaso"; li.append(a); toc.append(li); }
+if(RC.length){ const li=el("li"); const a=el("a",null,"Repaso del curso"); a.href="#h-repcurso"; li.append(a); toc.append(li); }
+if(MC.length){ const li=el("li"); const a=el("a",null,"Material complementario"); a.href="#h-compl"; li.append(a); toc.append(li); }
+
+document.getElementById("stat-fichas").textContent = DATA.fichas.length;
+document.getElementById("stat-rec").textContent = DATA.fichas.reduce((a,f)=>a+(f.grupos||[]).reduce((b,g)=>b+g.archivos.length,0),0);
+document.getElementById("stat-fecha").textContent = DATA.actualizado;
+</script>
+</body>
+</html>
